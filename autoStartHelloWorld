@@ -23,11 +23,12 @@
         "UserData" : {
           "Fn::Base64" : { "Fn::Join" : ["",
             [
-               "#!/bin/bash", "\n",
-               "sudo yum -y install nodejs npm --enablerepo=epel", "\n",
-               "sudo yum -y install git", "\n",
+               "#!/bin/bash -ex", "\n",
+               "echo 'hello' > ffff", "\n",
+               "yum -y install nodejs npm --enablerepo=epel", "\n",
+               "yum -y install git", "\n",
                "git clone https://github.com/sharmp07/demo", "\n",
-               "node demo/app.js", "\n"
+               "node demo/app.js &", "\n"
             ]
           ]}
         }
