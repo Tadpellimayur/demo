@@ -13,7 +13,7 @@
 
   "Resources" : {
 
-    "EC2Instance" : {
+    "EC2Instance1" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "InstanceType" : "t2.micro",
@@ -29,6 +29,28 @@
                "yum -y install git", "\n",
                "git clone https://github.com/sharmp07/demo", "\n",
                "node demo/app1.js &", "\n"
+            ]
+          ]}
+        }
+      }
+    },
+
+    "EC2Instance2" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "InstanceType" : "t2.micro",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "KeyName" : { "Ref" : "KeyPairName" },
+        "ImageId" : "ami-bff32ccc",
+        "UserData" : {
+          "Fn::Base64" : { "Fn::Join" : ["",
+            [
+               "#!/bin/bash -ex", "\n",
+               "echo 'hello' > ffff", "\n",
+               "yum -y install nodejs npm --enablerepo=epel", "\n",
+               "yum -y install git", "\n",
+               "git clone https://github.com/sharmp07/demo", "\n",
+               "node demo/app2.js &", "\n"
             ]
           ]}
         }
@@ -54,7 +76,40 @@
           }
         ]
       }
+    },
+
+    "LoadBalancerSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Security groups",
+        "SecurityGroupIngress" : [
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+
+    "ElasticLoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+      "Properties": {
+        "SecurityGroups" : { "Ref" : "LoadBalancerSecurityGroup" },
+        "Instances" : [ { "Ref" : "Ec2Instance1" },{ "Ref" : "Ec2Instance2" } ],
+        "Scheme" : "internet-facing",
+        "Listeners": [
+          {
+            "LoadBalancerPort": "80",
+            "InstancePort": "4567",
+            "Protocol": "TCP",
+            "InstanceProtocol" : "TCP"
+          }
+        ]
+      }
     }
+
   },
 
   "Outputs" : {
