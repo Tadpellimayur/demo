@@ -67,7 +67,7 @@
        }
      },
 
-     "SubnetRouteTableAssociation" : {
+     "SubnetRouteTableAssociation1" : {
        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
        "Properties" : {
          "SubnetId" : { "Ref" : "SubnetOne" },
