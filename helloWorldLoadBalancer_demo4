@@ -117,6 +117,14 @@
       "Description" : "Instance Id 1",
       "Value" : { "Ref" : "EC2Instance1" }
     },
+    "InstanceId2" : {
+      "Description" : "Instance Id 2",
+      "Value" : { "Ref" : "EC2Instance2" }
+    },
+    "ELB" : {
+      "Description" : "ELB",
+      "Value" : { "Ref" : "ElasticLoadBalancer" }
+    },
     "PublicDNS" : {
       "Description" : "Public DNSName 1",
       "Value" : { "Fn::GetAtt" : [ "EC2Instance1", "PublicDnsName" ] }
@@ -124,10 +132,6 @@
     "PublicIP" : {
       "Description" : "Public IP 1",
       "Value" : { "Fn::GetAtt" : [ "EC2Instance1", "PublicIp" ] }
-    },
-    "InstanceId" : {
-      "Description" : "Instance Id 2",
-      "Value" : { "Ref" : "EC2Instance2" }
     },
     "PublicDNS" : {
       "Description" : "Public DNSName 2",
